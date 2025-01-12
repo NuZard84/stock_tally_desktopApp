@@ -20,7 +20,13 @@
 ![Stock Tally Dashboard](/screenshots/dashboard.png)  
 _The intuitive dashboard for managing stock levels._
 
-![Low Stock Alerts](/screenshots/alerts.png)  
+![Stock organization System](/screenshots/stock_management.png)  
+_The intuitive dashboard for managing stock levels._
+
+![Products Table](/screenshots/product.png)  
+_Get notified when stock levels are low._
+
+![Low Stock Stock Alert](/screenshots/reports.png)  
 _Get notified when stock levels are low._
 
 ---
