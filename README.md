@@ -23,7 +23,7 @@ _The intuitive dashboard for managing stock levels._
 ![Stock organization System](/screenshots/stock_management.png)  
 _The intuitive dashboard for managing stock levels._
 
-![Products Table](/screenshots/product.png)  
+![Products Table](/screenshots/products.png)  
 _Get notified when stock levels are low._
 
 ![Low Stock Stock Alert](/screenshots/reports.png)  
