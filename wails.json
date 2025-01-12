@@ -1,0 +1,18 @@
+{
+  "$schema": "https://wails.io/schemas/config.v2.json",
+  "name": "stock_tally_desktopApp",
+  "outputfilename": "Stock_tally",
+  "frontend:install": "npm install",
+  "frontend:build": "npm run build",
+  "frontend:dev:watcher": "npm run dev",
+  "frontend:dev:serverUrl": "auto",
+  "author": {
+    "name": "NuZrd84",
+    "email": "86848690+NuZard84@users.noreply.github.com"
+  },
+  "companyName": "Nuzrdware",
+  "productName": "Stock_tally",
+  "productVersion": "1.0.0",
+  "copyright": "Copyright.........",
+  "comments": "Built using Wails (https://wails.io)"
+}

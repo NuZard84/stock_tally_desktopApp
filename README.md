@@ -1,0 +1,2 @@
+# stock_tally_desktopApp
+ Stock Tally is a desktop application designed to simplify inventory and stock management for businesses. Built with Wails (Go + React), this application provides an intuitive interface for tracking stock levels, managing items, and generating reports. Whether you're a small business owner or a warehouse manager, Stock Tally helps you stay organized and make data-driven decisions.
