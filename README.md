@@ -21,10 +21,10 @@
 _The intuitive dashboard for managing stock levels._
 
 ![Stock organization System](/screenshots/stock_management.png)  
-_The intuitive dashboard for managing stock levels._
+_The management system for adding removing and searching for stocks._
 
 ![Products Table](/screenshots/products.png)  
-_Get notified when stock levels are low._
+_Get item nomber in Table view for specific folder company and finish name._
 
 ![Low Stock Stock Alert](/screenshots/reports.png)  
 _Get notified when stock levels are low._
