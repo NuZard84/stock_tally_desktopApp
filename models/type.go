@@ -35,3 +35,12 @@ type LowStockItem struct {
 	Quantity int    `json:"quantity"`
 	FilePath string `json:"file_path"`
 }
+
+// SearchResult represents a single item found in search results
+type SearchResult struct {
+	Company  string `json:"company"`
+	Finish   string `json:"finish"`
+	ItemNo   string `json:"itemNo"`
+	Quantity int    `json:"quantity"`
+	FilePath string `json:"filePath"`
+}

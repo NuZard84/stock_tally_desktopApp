@@ -120,6 +120,26 @@ export namespace models {
 	        this.file_path = source["file_path"];
 	    }
 	}
+	export class SearchResult {
+	    company: string;
+	    finish: string;
+	    itemNo: string;
+	    quantity: number;
+	    filePath: string;
+	
+	    static createFrom(source: any = {}) {
+	        return new SearchResult(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.company = source["company"];
+	        this.finish = source["finish"];
+	        this.itemNo = source["itemNo"];
+	        this.quantity = source["quantity"];
+	        this.filePath = source["filePath"];
+	    }
+	}
 
 }
 

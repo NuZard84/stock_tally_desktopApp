@@ -4,6 +4,10 @@ import {models} from '../models';
 
 export function CleanupOldFiles(arg1:number):Promise<void>;
 
+export function CleanupTempFile(arg1:string):Promise<void>;
+
+export function ExportAllToCSV():Promise<string>;
+
 export function GetCompanyData(arg1:string):Promise<models.Company>;
 
 export function GetLowStockItems(arg1:number):Promise<Array<models.LowStockItem>>;
@@ -11,5 +15,7 @@ export function GetLowStockItems(arg1:number):Promise<Array<models.LowStockItem>
 export function GetProcessedFiles():Promise<Array<models.FileInfo>>;
 
 export function ProcessExcelFile(arg1:string,arg2:string):Promise<void>;
+
+export function SearchItemsAdvanced(arg1:string):Promise<Array<models.SearchResult>>;
 
 export function UpdateStock(arg1:string,arg2:string,arg3:string,arg4:number):Promise<void>;

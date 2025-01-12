@@ -76,6 +76,65 @@ func (a *App) startup(ctx context.Context) {
 	log.Println("App started successfully")
 }
 
+// ExportAllToCSV generates a CSV file containing data for all companies and returns the file content as a string
+//
+//export ExportAllToCSV
+func (a *App) ExportAllToCSV() (string, error) {
+	// Get all processed files
+	files, err := a.dir.GetProcessedFiles()
+	if err != nil {
+		return "", fmt.Errorf("error getting processed files: %v", err)
+	}
+
+	// Create a buffer to store the CSV data
+	var buffer strings.Builder
+
+	// Write CSV headers
+	headers := []string{"Company", "Finish", "Item No", "Quantity"}
+	if _, err := buffer.WriteString(strings.Join(headers, ",") + "\n"); err != nil {
+		return "", fmt.Errorf("error writing CSV headers: %v", err)
+	}
+
+	// Iterate through all processed files
+	for _, file := range files {
+		// Read the company data from the JSON file
+		company, err := a.dir.GetCompanyData(file.Path)
+		if err != nil {
+			log.Printf("Error reading company data for %s: %v", file.Name, err)
+			continue
+		}
+
+		// Write data rows for the company
+		for _, finish := range company.Finishes {
+			for _, item := range finish.Items {
+				row := []string{
+					company.Name,
+					finish.Name,
+					item.ItemNo,
+					strconv.Itoa(item.Quantity),
+				}
+				if _, err := buffer.WriteString(strings.Join(row, ",") + "\n"); err != nil {
+					return "", fmt.Errorf("error writing CSV row: %v", err)
+				}
+			}
+		}
+	}
+
+	log.Printf("CSV data generated successfully")
+	return buffer.String(), nil
+}
+
+// CleanupTempFile deletes a temporary file
+//
+//export CleanupTempFile
+func (a *App) CleanupTempFile(filePath string) error {
+	if err := os.Remove(filePath); err != nil {
+		return fmt.Errorf("error cleaning up temporary file: %v", err)
+	}
+	log.Printf("Temporary file cleaned up: %s", filePath)
+	return nil
+}
+
 // ProcessExcelFile processes the uploaded Excel file and converts it to JSON
 func (a *App) ProcessExcelFile(base64Data, originalFileName string) error {
 	// Decode base64 data
@@ -473,4 +532,77 @@ func (a *App) GetLowStockItems(criteria int) ([]models.LowStockItem, error) {
 	}
 
 	return lowStockItems, nil
+}
+
+// SearchItems searches for items based on search criteria
+// Add this function to your App struct in the backend
+func (a *App) SearchItemsAdvanced(searchTerm string) ([]models.SearchResult, error) {
+	// Split the search term into potential finish and item number
+	parts := strings.Fields(searchTerm) // This splits on whitespace
+
+	files, err := a.dir.GetProcessedFiles()
+	if err != nil {
+		return nil, fmt.Errorf("error getting files: %v", err)
+	}
+
+	var results []models.SearchResult
+
+	for _, file := range files {
+		company, err := a.dir.GetCompanyData(file.Path)
+		if err != nil {
+			log.Printf("Error reading company data for %s: %v", file.Name, err)
+			continue
+		}
+
+		for _, finish := range company.Finishes {
+			// If we have two parts (like "HG 1092"), check both finish and item number
+			if len(parts) > 1 {
+				finishMatches := strings.Contains(
+					strings.ToLower(finish.Name),
+					strings.ToLower(parts[0]),
+				)
+
+				for _, item := range finish.Items {
+					itemMatches := strings.Contains(
+						strings.ToLower(item.ItemNo),
+						strings.ToLower(parts[1]),
+					)
+
+					if finishMatches && itemMatches {
+						results = append(results, models.SearchResult{
+							Company:  company.Name,
+							Finish:   finish.Name,
+							ItemNo:   item.ItemNo,
+							Quantity: item.Quantity,
+							FilePath: file.Path,
+						})
+					}
+				}
+			} else {
+				// If we only have one part, search in both finish and item number
+				searchLower := strings.ToLower(searchTerm)
+				finishMatches := strings.Contains(strings.ToLower(finish.Name), searchLower)
+
+				for _, item := range finish.Items {
+					itemMatches := strings.Contains(strings.ToLower(item.ItemNo), searchLower)
+
+					if finishMatches || itemMatches {
+						results = append(results, models.SearchResult{
+							Company:  company.Name,
+							Finish:   finish.Name,
+							ItemNo:   item.ItemNo,
+							Quantity: item.Quantity,
+							FilePath: file.Path,
+						})
+					}
+				}
+			}
+		}
+	}
+
+	if len(results) == 0 {
+		return nil, fmt.Errorf("no items found matching '%s'", searchTerm)
+	}
+
+	return results, nil
 }

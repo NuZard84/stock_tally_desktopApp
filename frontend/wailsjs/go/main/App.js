@@ -6,6 +6,14 @@ export function CleanupOldFiles(arg1) {
   return window['go']['main']['App']['CleanupOldFiles'](arg1);
 }
 
+export function CleanupTempFile(arg1) {
+  return window['go']['main']['App']['CleanupTempFile'](arg1);
+}
+
+export function ExportAllToCSV() {
+  return window['go']['main']['App']['ExportAllToCSV']();
+}
+
 export function GetCompanyData(arg1) {
   return window['go']['main']['App']['GetCompanyData'](arg1);
 }
@@ -20,6 +28,10 @@ export function GetProcessedFiles() {
 
 export function ProcessExcelFile(arg1, arg2) {
   return window['go']['main']['App']['ProcessExcelFile'](arg1, arg2);
+}
+
+export function SearchItemsAdvanced(arg1) {
+  return window['go']['main']['App']['SearchItemsAdvanced'](arg1);
 }
 
 export function UpdateStock(arg1, arg2, arg3, arg4) {
